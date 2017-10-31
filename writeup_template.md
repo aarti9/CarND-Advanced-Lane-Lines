@@ -19,15 +19,16 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[imageCameraCal]: ./cameraCaliberation.png "Caliberated Chessboard"
-[test3image]: ./test_images/test3.jpg "Test 3 Image"
-[image1]: undistort.png "Undistorted"
-[threshold1]: threshold1.png "Threshold1"
-[threshold2]: ./threshold2.png "Threshold2"
-[warped]: ./warped.png "Warped image"
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
-[roc]: ./roc.png "ROC"
+[image1]: ./cameraCaliberation.png "Caliberated Chessboard"
+
+[image2]: undistort.png "Undistorted"
+[image3]: threshold1.png "Threshold1"
+[image4]: ./threshold2.png "Threshold2"
+[image5]: ./warped.png "Warped image"
+[image6]: ./examples/warped_straight_lines.jpg "Warp Example"
+[image7]: ./examples/color_fit_lines.jpg "Fit Visual"
+[image8]: ./roc.png "ROC"
+[image9]: ./test_images/test3.jpg "Test 3 Image"
 [video1]: ./project_video.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
@@ -52,7 +53,7 @@ I start by preparing "object points", which will be the (x, y, z) coordinates of
 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function. Example of the chessboard corners detected image is as below:
 
-![alt text][imageCameraCal]
+![alt text][image1]
 
 ### Pipeline (single images)
 
@@ -62,19 +63,19 @@ The code for this step is contained in the second code cell of my IPython notebo
 
  I applied this distortion correction to the test image and a chessboard image using the `cv2.undistort()` function and obtained this result: 
 
-![alt text][image1]
+![alt text][image2]
 
 You can notice the curvature of the chessboard on the left side is corrected. The test image of the road is already fine, hence we do not see any visible correction. But the idea is to correct in case it is required.
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
-The code for this step is contained in the third code cell of the IPython notebook. I experimented with different threshilding mechanisms like mag_threshold which gives magnitude of the gradient and abs_sobel_thresh. Also tried various mask filters for white and yellow line detection. Finally I combined white and yellow masks to get the lane as left side lane had yellow color.
+The code for this step is contained in the third code cell of the IPython notebook. I experimented with different thresholding mechanisms like mag_threshold which gives magnitude of the gradient and abs_sobel_thresh. Also tried various mask filters for white and yellow line detection. Finally I combined white and yellow masks to get the lane as left side lane had yellow color.
 
 Here's an example of my output for this step. 
 
-![alt text][threshold1]
+![alt text][image3]
 
-![alt text][threshold2]
+![alt text][image4]
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
@@ -103,14 +104,14 @@ This resulted in the following source and destination points:
 | 695, 460      | 960, 0        |
 
 
-![alt text][warped]
+![alt text][image5]
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
 I followed the instructions from our lecture material. For the first frame, I used the histogram to find out the peaks for the left and right side of lane lines. Tried to recentre sliding window based on left and right pixel position and a margin. Then I fit a second order polynomial using numpy's polyfit function. For subsequent frames, we continue using the left_fit and right_fit value we used when fitting the second order polynomial in first frame. Then I generated a polygon to illustrate the search window area and recast the x and y points into usable format for cv2.fillPoly(). We use cv2.addWeighted methods to add two images and assign appropriate weightage.
 We process each frame in the video clip input video and then produce the output video with land detected and marked in green
 
-![alt text][image5]
+![alt text][image7]
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
@@ -120,7 +121,7 @@ I did this in lines #147 through #154 in my code. I used the technique used in l
 
 I implemented this step in lines #157 through #169 in my code to show the lane lines identified and filled with green. Here is an example of my result on a test image:
 
-![alt text][roc]
+![alt text][image8]
 
 ---
 
