@@ -27,7 +27,7 @@ The goals / steps of this project are the following:
 [warped]: ./warped.png "Warped image"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image6]: ./examples/example_output.jpg "Output"
+[roc]: ./roc.png "ROC"
 [video1]: ./project_video.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
@@ -78,7 +78,7 @@ Here's an example of my output for this step.
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
-The code for this step is contained in the fourth code cell of the IPython notebook. I chose the hardcode the source and destination points in the following manner:
+The code for this step is contained in the fourth code cell of the IPython notebook. I chose the source and destination points in the following manner:
 
 ```python
 src = np.float32(
@@ -102,25 +102,25 @@ This resulted in the following source and destination points:
 | 1126.6, 720     | 960, 720      |
 | 695, 460      | 960, 0        |
 
-I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
 ![alt text][warped]
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+I followed the instructions from our lecture material. For the first frame, I used the histogram to find out the peaks for the left and right side of lane lines. Tried to recentre sliding window based on left and right pixel position and a margin. Then I fit a second order polynomial using numpy's polyfit function. For subsequent frames, we continue using the left_fit and right_fit value we used when fitting the second order polynomial in first frame. Then I generated a polygon to illustrate the search window area and recast the x and y points into usable format for cv2.fillPoly(). We use cv2.addWeighted methods to add two images and assign appropriate weightage.
+We process each frame in the video clip input video and then produce the output video with land detected and marked in green
 
 ![alt text][image5]
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this in lines # through # in my code in `my_other_file.py`
+I did this in lines #147 through #154 in my code. I used the technique used in lecture material to calculate left_curverad and right_curverad. I printed left_curverad and distance from center position values on the test image, for which I got some ideas to show overlap text on the image from internet. The example is shown in section 6 below which also illustrates the plotting back of lane identified
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
+I implemented this step in lines #157 through #169 in my code to show the lane lines identified and filled with green. Here is an example of my result on a test image:
 
-![alt text][image6]
+![alt text][roc]
 
 ---
 
@@ -128,7 +128,7 @@ I implemented this step in lines # through # in my code in `yet_another_file.py`
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](./project_video_output.mp4)
 
 ---
 
@@ -136,4 +136,5 @@ Here's a [link to my video result](./project_video.mp4)
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+I had few issues with the thresholding. I tried to combine various thresholds, but for few combinations it was resulting in blank image. Finally only the white and yellow masking threshold worked, which was fine as that helped in identify the lane. 
+A potential issue might be when the lines are not marked properly or even in first frame we fail to identify the left and right lines, or some object comes on the path in front of the car which hides the lane. I think we might have to also take help from GPS navigation system tracker of where we are and how does front road looks like and use that to augment our program.
