@@ -21,13 +21,13 @@ The goals / steps of this project are the following:
 
 [image1]: ./examples/cameraCaliberation.png "Caliberated Chessboard"
 
-[image2]: ./examples/undistort.png "Undistorted"
-[image3]: ./examples/threshold1.png "Threshold1"
-[image4]: ./examples/threshold2.png "Threshold2"
-[image5]: ./examples/warped.png "Warped image"
+[image2]: ./examples/undistort.PNG "Undistorted"
+[image3]: ./examples/threshold1.PNG"Threshold1"
+[image4]: ./examples/threshold2.PNG "Threshold2"
+[image5]: ./examples/warped.PNG "Warped image"
 [image6]: ./examples/warped_straight_lines.jpg "Warp Example"
 [image7]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image8]: ./examples/roc.png "ROC"
+[image8]: ./examples/roc.PNG "ROC"
 [image9]: ./test_images/test3.jpg "Test 3 Image"
 [video1]: ./project_video.mp4 "Video"
 
