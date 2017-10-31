@@ -19,10 +19,9 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/cameraCaliberation.png "Caliberated Chessboard"
-
+[image1]: ./examples/cameraCaliberation.PNG "Caliberated Chessboard"
 [image2]: ./examples/undistort.PNG "Undistorted"
-[image3]: ./examples/threshold1.PNG"Threshold1"
+[image3]: ./examples/threshold1.PNG "Threshold1"
 [image4]: ./examples/threshold2.PNG "Threshold2"
 [image5]: ./examples/warped.PNG "Warped image"
 [image6]: ./examples/warped_straight_lines.jpg "Warp Example"
