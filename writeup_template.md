@@ -19,7 +19,7 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[cameraCal]: cameraCaliberation.png "Caliberated Chessboard"
+[cameraCal]: [https://github.com/aarti9/CarND-Advanced-Lane-Lines/blob/master/cameraCaliberation.PNG](https://github.com/aarti9/CarND-Advanced-Lane-Lines/blob/master/cameraCaliberation.PNG) "Caliberated Chessboard"
 [test3image]: ./test_images/test3.jpg "Test 3 Image"
 [image1]: undistort.png "Undistorted"
 [threshold1]: threshold1.png "Threshold1"
@@ -52,7 +52,7 @@ I start by preparing "object points", which will be the (x, y, z) coordinates of
 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function. Example of the chessboard corners detected image is as below:
 
-[cameraCal]
+![alt text][cameraCal]
 
 ### Pipeline (single images)
 
