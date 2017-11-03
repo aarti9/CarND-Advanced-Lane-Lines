@@ -46,7 +46,7 @@ You're reading it!
 
 #### 1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
 
-The code for this step is contained in the first code cell of the IPython notebook located in "https://github.com/aarti9/CarND-Advanced-Lane-Lines/blob/master/AdvanceLaneDetect.ipynb" .  
+The code for this step is contained in the cameraCalibration method in the second code cell of the IPython notebook located in "https://github.com/aarti9/CarND-Advanced-Lane-Lines/blob/master/AdvanceLaneDetectP4.ipynb" .  
 
 I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  I used cv2.findChessboardCorners() for finding chessboard corners (for an 9x6 board) for grayscale image. `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
 
@@ -58,7 +58,7 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 
 #### 1. Provide an example of a distortion-corrected image.
 
-The code for this step is contained in the second code cell of my IPython notebook. To demonstrate this step, I will describe how I apply the distortion correction to one of the test images (test3.jpg and one of the chessboard image):
+The code for this step is contained in the third code cell of my IPython notebook. To demonstrate this step, I will describe how I apply the distortion correction to one of the test images (test3.jpg and one of the chessboard image):
 
  I applied this distortion correction to the test image and a chessboard image using the `cv2.undistort()` function and obtained this result: 
 
@@ -68,7 +68,7 @@ You can notice the curvature of the chessboard on the left side is corrected. Th
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
-The code for this step is contained in the third code cell of the IPython notebook. I experimented with different thresholding mechanisms like mag_threshold which gives magnitude of the gradient and abs_sobel_thresh. Also tried various mask filters for white and yellow line detection. Finally I combined white and yellow masks to get the lane as left side lane had yellow color.
+The code for this step is contained in the fourth code cell of the IPython notebook. I experimented with different thresholding mechanisms like mag_threshold which gives magnitude of the gradient and abs_sobel_thresh. Also tried various mask filters for white and yellow line detection. Finally I combined white and yellow masks to get the lane as left side lane had yellow color.
 
 Here's an example of my output for this step. 
 
@@ -108,17 +108,17 @@ This resulted in the following source and destination points:
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
 I followed the instructions from our lecture material. For the first frame, I used the histogram to find out the peaks for the left and right side of lane lines. Tried to recentre sliding window based on left and right pixel position and a margin. Then I fit a second order polynomial using numpy's polyfit function. For subsequent frames, we continue using the left_fit and right_fit value we used when fitting the second order polynomial in first frame. Then I generated a polygon to illustrate the search window area and recast the x and y points into usable format for cv2.fillPoly(). We use cv2.addWeighted methods to add two images and assign appropriate weightage.
-We process each frame in the video clip input video and then produce the output video with land detected and marked in green
+We process each frame in the video clip input video and then produce the output video with land detected and marked in green. The video initially although detected lane, but was not being close to exact. I had to investigate what was causing my issue and did search for ideas how many people could do it perfectly. I came to conclusion that I wasnt doing initial transformation in my pipeline. Also realized that initially I was getting M and Minv only once, but had to do it for each frame. After doing that, I undistorted the image of the frame and let it go through the thresholding process which I used earlier as a sample. After that, I did Warp Perspective. Also moved Radius of curvature to the subsequent frames, so it can continuously show on the video.
 
 ![alt text][image7]
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this in lines #147 through #154 in my code. I used the technique used in lecture material to calculate left_curverad and right_curverad. I printed left_curverad and distance from center position values on the test image, for which I got some ideas to show overlap text on the image from internet. The example is shown in section 6 below which also illustrates the plotting back of lane identified
+I did this in the second last cell and marked in comments as ## RADIUS OF CURVATURE in my code. I used the technique used in lecture material to calculate left_curverad and right_curverad. I printed left_curverad and distance from center position values on the test image, for which I got some ideas to show overlap text on the image from internet. The example is shown in section 6 below which also illustrates the plotting back of lane identified
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-I implemented this step in lines #157 through #169 in my code to show the lane lines identified and filled with green. Here is an example of my result on a test image:
+I implemented this step once the if else block was done in my pipeline code to show the lane lines identified and filled with green. Here is an example of my result on a test image:
 
 ![alt text][image8]
 
